@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+
+        Cache::forget('categories');
+
+        $category = Category::factory()->create();
+
+        Product::factory()->count(10)->create([
+            'category_id' => $category->id
+        ]);
+
+        $this->call(ResourceSeeder::class);
     }
 }
