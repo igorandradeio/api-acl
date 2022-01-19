@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class UserRepository
 {
@@ -15,16 +16,22 @@ class UserRepository
 
     public function getAllUsers()
     {
-        return $this->entity->get();
+
+        return Cache::rememberForever('users', function () {
+            return $this->entity->with('permissions')->get();
+        });
     }
 
     public function createNewUser(array $data)
     {
+        Cache::forget('users');
+
         return $this->entity->create($data);
     }
 
     public function getUserByUuid(string $uuid)
     {
+
         return $this->entity
             ->with('permissions')
             ->where('uuid', $uuid)
@@ -40,6 +47,8 @@ class UserRepository
             $data['password'] = bcrypt($data['password']);
         }
 
+        Cache::forget('users');
+
         return $user->update($data);
     }
 
@@ -47,6 +56,8 @@ class UserRepository
     {
 
         $user = $this->getUserByUuid($uuid);
+
+        Cache::forget('users');
 
         return $user->delete();
     }
