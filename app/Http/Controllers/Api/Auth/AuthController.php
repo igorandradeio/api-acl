@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthUser;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -33,5 +34,21 @@ class AuthController extends Controller
             ->additional([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
             ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'logout' => 'success'
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        return new UserResource($user);
     }
 }
