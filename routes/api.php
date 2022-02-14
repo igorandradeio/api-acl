@@ -30,6 +30,8 @@ Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    /** User permission validate route*/
+    Route::get('/users/can/{permission}', [PermissionUserController::class, 'userHasPermissionsUser']);
     /** User permission route*/
     Route::post('/users/permissions', [PermissionUserController::class, 'addPermissionsUser']);
     Route::get('/users/{uuid}/permissions', [PermissionUserController::class, 'permissionUser']);
