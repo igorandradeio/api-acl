@@ -33,8 +33,8 @@ class UserRepository
     {
 
         return $this->entity
-            ->with('permissions')
             ->where('uuid', $uuid)
+            ->with('permissions')
             ->firstOrFail();
     }
 
