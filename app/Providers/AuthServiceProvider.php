@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('add_permissions_user', function ($user) {
-            return $user->$user->hasPermission('add_permissions_user');
+            return $user->hasPermission('add_permissions_user');
         });
 
         Gate::before(function ($user) {
