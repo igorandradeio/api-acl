@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/permissions', [PermissionUserController::class, 'addPermissionsUser']);
     Route::get('/users/{uuid}/permissions', [PermissionUserController::class, 'permissionUser']);
     /** User routes*/
-    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/users', UserController::class)->middleware('can:users');
 
     Route::apiResource('/categories/{category}/products', ProductController::class);
     /** Update category by uuid*/
