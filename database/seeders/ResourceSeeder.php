@@ -28,5 +28,6 @@ class ResourceSeeder extends Seeder
 
         $admins = Resource::create(['name' => 'Admins']);
         $admins->permissions()->create(['name' => 'users']);
+        $admins->permissions()->create(['name' => 'add_permissions_user']);
     }
 }
