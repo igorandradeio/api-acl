@@ -20,11 +20,13 @@ class ResourceSeeder extends Seeder
         $post->permissions()->create(['name' => 'edit_post']);
         $post->permissions()->create(['name' => 'delete_post']);
 
-
         $product = Resource::create(['name' => 'Products']);
         $product->permissions()->create(['name' => 'view_products']);
         $product->permissions()->create(['name' => 'view_product']);
         $product->permissions()->create(['name' => 'edit_product']);
         $product->permissions()->create(['name' => 'delete_product']);
+
+        $admins = Resource::create(['name' => 'Admins']);
+        $admins->permissions()->create(['name' => 'users']);
     }
 }
