@@ -32,8 +32,11 @@ Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
     /** User permission validate route*/
     Route::get('/users/can/{permission}', [PermissionUserController::class, 'userHasPermissionsUser']);
-    /** User permission route*/
+    /** Add user permission route*/
     Route::post('/users/permissions', [PermissionUserController::class, 'addPermissionsUser']);
+    /** Remove user permission route*/
+    Route::delete('/users/permissions', [PermissionUserController::class, 'removePermissionsUser'])->middleware('can:delete_user_permission');
+
     Route::get('/users/{uuid}/permissions', [PermissionUserController::class, 'permissionUser']);
     /** User routes*/
     Route::apiResource('/users', UserController::class)->middleware('can:users');
